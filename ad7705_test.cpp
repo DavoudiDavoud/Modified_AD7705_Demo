@@ -232,11 +232,11 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"chanel1 = %d chanel2 = %d      \r",value1,value2);
 
 		// if stdout is redirected to a file or pipe, output the data
-		if( no_tty )
+		/*if( no_tty )
 		{
 			printf("%d\n", value);
 			fflush(stdout);
-		}
+		}*/
 	}
 
 	close(fd);
