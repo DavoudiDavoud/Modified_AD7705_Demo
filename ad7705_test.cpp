@@ -172,19 +172,19 @@ int main(int argc, char *argv[])
 	writeReset(fd);
 
 	// tell the AD7705 that the next write will be to the clock register
-	writeReg(fd,0x20);
+	writeReg(fd,0x21);
 	// write 00001100 : CLOCKDIV=1,CLK=1,expects 4.9152MHz input clock
 	writeReg(fd,0x0C);
 
 	// tell the AD7705 that the next write will be the setup register
-	writeReg(fd,0x10);
+	writeReg(fd,0x11);
 	// intiates a self calibration and then after that starts converting
 	writeReg(fd,0x40);
 	
 	 // let's wait for data for max one second
 	 ret = gpio_poll(sysfs_fd,1000);
 	 if (ret<1) {
-	    fprintf(stderr,"Poll error setup %d\n",ret);
+	    fprintf(stderr,"Poll error setup %d\n\n\n\n",ret);
 	  }
 
 	// we read data in an endless loop and display it
@@ -192,11 +192,11 @@ int main(int argc, char *argv[])
 	while (1) {
 
 	  // tell the AD7705 to read the data register (16 bits)
-	  writeReg(fd,0x38);
+	  writeReg(fd,0x39);
 	  // let's wait for data for max one second
 	  ret = gpio_poll(sysfs_fd,1000);
 	  if (ret<1) {
-	    fprintf(stderr,"Poll error read data%d\n",ret);
+	    fprintf(stderr,"Poll error read data%d\n\n\n\n",ret);
 	  }
 	  
 	  // read the data register by performing two 8 bit reads
