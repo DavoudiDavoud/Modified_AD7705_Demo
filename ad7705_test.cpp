@@ -186,11 +186,7 @@ int main(int argc, char *argv[])
 	    fprintf(stderr,"Poll error setup ch1 %d\n\n\n\n",ret);
 	  }
 	//ch2
-	// tell the AD7705 that the next write will be to the clock register
-	writeReg(fd,0x21);
-	// write 00001100 : CLOCKDIV=1,CLK=1,expects 4.9152MHz input clock
-	writeReg(fd,0x0C); 
-	 // tell the AD7705 that the next write will be the setup register
+	// tell the AD7705 that the next write will be the setup register
 	writeReg(fd,0x11);
 	// intiates a self calibration and then after that starts converting
 	writeReg(fd,0x40);
