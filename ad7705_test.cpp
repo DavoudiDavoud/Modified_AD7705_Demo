@@ -180,19 +180,25 @@ int main(int argc, char *argv[])
 	writeReg(fd,0x10);
 	// intiates a self calibration and then after that starts converting
 	writeReg(fd,0x40);
+	
+	 // let's wait for data for max one second
+	 ret = gpio_poll(sysfs_fd,1000);
+	 if (ret<1) {
+	    fprintf(stderr,"Poll error setup %d\n",ret);
+	  }
 
 	// we read data in an endless loop and display it
 	// this needs to run in a thread ideally
 	while (1) {
 
+	  // tell the AD7705 to read the data register (16 bits)
+	  writeReg(fd,0x38);
 	  // let's wait for data for max one second
 	  ret = gpio_poll(sysfs_fd,1000);
 	  if (ret<1) {
-	    fprintf(stderr,"Poll error %d\n",ret);
+	    fprintf(stderr,"Poll error read data%d\n",ret);
 	  }
-
-	  // tell the AD7705 to read the data register (16 bits)
-	  writeReg(fd,0x38);
+	  
 	  // read the data register by performing two 8 bit reads
 	  int value = readData(fd)-0x8000;
 		fprintf(stderr,"data = %d       \r",value);
